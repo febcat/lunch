@@ -8,7 +8,7 @@
       :isSelected="index === selectedIndex"
     />
     <div class="time">
-      {{time}}
+      {{showLunch}}
     </div>
     <span class="run" @click="run">
       吃点啥
@@ -21,35 +21,54 @@ import { getRandom } from '../../utils/tools'
 import Item from '@/components/item'
 import { getLunchMap } from '../../utils/conf'
 
+const TIME = 5
+
 export default {
   name: 'lunch',
   data () {
     return {
       selectedIndex: -1,
       lunchMap: [],
-      time: 5,
-      thimer: null
+      time: TIME,
+      timerA: null,
+      timerB: null
     }
   },
   created () {
     this.lunchMap = getLunchMap()
   },
+  computed: {
+    showLunch () {
+      return this.time === 0 ? this.lunchMap[this.selectedIndex].text : this.time
+    }
+  },
   methods: {
     run () {
-      if (this.thimer) {
+      if (this.timerA) {
         return
       }
 
-      this.time = 5
+      this.time = TIME
 
-      this.thimer = setInterval(() => {
-        this.selectedIndex = getRandom(1, this.lunchMap.length)
+      this.timerA = setInterval(() => {
+        let l = this.lunchMap.length
+        let randomNum = getRandom(1, l)
+
+        if (randomNum === this.selectedIndex) {
+          randomNum = randomNum === l - 1 ? 0 : randomNum + 1
+        }
+
+        this.selectedIndex = randomNum
+      }, 100)
+
+      this.timerB = setInterval(() => {
         this.time--
 
         if (this.time === 0) {
-          this.time = this.lunchMap[this.selectedIndex].text
-          clearInterval(this.thimer)
-          this.thimer = null
+          clearInterval(this.timerA)
+          clearInterval(this.timerB)
+          this.timerA = null
+          this.timerB = null
         }
       }, 1000)
     }
