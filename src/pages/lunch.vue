@@ -7,11 +7,9 @@
       :text="item.text"
       :isSelected="index === selectedIndex"
     />
-    <div class="time">
-      {{showLunch}}
-    </div>
+    <ShowLunch :lunch="showLunch" />
     <span class="run" @click="run">
-      吃点啥
+      吃点啥{{time}}
     </span>
   </div>
 </template>
@@ -19,30 +17,37 @@
 <script>
 import { getRandom } from '../../utils/tools'
 import Item from '@/components/item'
-import { getLunchMap } from '../../utils/conf'
+import ShowLunch from '@/components/showlunch'
+import { getLunchMap, nbMap } from '../../utils/conf'
 
-const TIME = 5
+const TIME = 8
 
 export default {
   name: 'lunch',
   data () {
     return {
       selectedIndex: -1,
+      nbIndex: -1,
       lunchMap: [],
       time: TIME,
       timerA: null,
-      timerB: null
+      timerB: null,
+      timeC: null
     }
   },
   created () {
     this.lunchMap = getLunchMap()
+    this.nbIndex = getRandom(1, nbMap.length)
   },
   computed: {
     showLunch () {
-      return this.time === 0 ? this.lunchMap[this.selectedIndex].text : this.time
+      return this.time === 0 ? this.lunchMap[this.selectedIndex] : this.sayNb()
     }
   },
   methods: {
+    sayNb (index) {
+      return nbMap[index || this.nbIndex]
+    },
     run () {
       if (this.timerA) {
         return
@@ -67,13 +72,27 @@ export default {
         if (this.time === 0) {
           clearInterval(this.timerA)
           clearInterval(this.timerB)
+          clearInterval(this.timeC)
           this.timerA = null
           this.timerB = null
+          this.timeC = null
         }
       }, 1000)
+
+      this.timeC = setInterval(() => {
+        let l = nbMap.length
+        let randomNum = getRandom(1, l)
+
+        if (randomNum === this.nbIndex) {
+          randomNum = randomNum === l - 1 ? 0 : randomNum + 1
+        }
+
+        this.nbIndex = randomNum
+      }, 2000)
     }
   },
   components: {
+    'ShowLunch': ShowLunch,
     'Item': Item
   }
 }
@@ -93,17 +112,9 @@ export default {
   justify-content: center;
   align-items: flex-start;
 }
-.time {
-  margin-top: 100px;
-  width: 100%;
-  height: 100px;
-  font-size: 60px;
-  text-align: center;
-  color: #000;
-}
 .run {
   position: fixed;
-  bottom: 50px;
+  bottom: 10px;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 35px;
