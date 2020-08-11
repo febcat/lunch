@@ -9,7 +9,7 @@
     />
     <ShowLunch :lunch="showLunch" />
     <span class="run" @click="run">
-      吃点啥{{time}}
+      吃点啥
     </span>
   </div>
 </template>
