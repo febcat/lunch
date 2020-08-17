@@ -82,6 +82,7 @@ ul, li {
 .shop li {
   background: blanchedalmond;
   padding: 5px 0px;
+  margin: 10px 0 ;
   text-align: center;
   overflow: hidden;
 }

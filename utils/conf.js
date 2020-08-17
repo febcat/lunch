@@ -87,6 +87,7 @@ const SMALL = [
   {
     text: '水果捞',
     shops: [
+      '切果NOW！',
       '切果NOW！'
     ],
     like: [],
@@ -143,7 +144,7 @@ const DRINKS = [
     dislike: []
   },
   {
-    text: '霉春色染',
+    text: '莓春色染',
     shops: [
       '沪上阿姨'
     ],
