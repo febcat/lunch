@@ -87,7 +87,6 @@ const SMALL = [
   {
     text: '水果捞',
     shops: [
-      '切果NOW！',
       '切果NOW！'
     ],
     like: [],
