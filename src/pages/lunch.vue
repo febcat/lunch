@@ -8,9 +8,14 @@
       :isSelected="index === selectedIndex"
     />
     <ShowLunch :lunch="showLunch" />
-    <span class="run" @click="run">
-      吃点啥
-    </span>
+    <div class="buttons">
+      <span class="run" @click="run">
+        吃点啥
+      </span>
+      <span class="goback" @click="goback">
+        返回
+      </span>
+    </div>
   </div>
 </template>
 
@@ -20,10 +25,13 @@ import Item from '@/components/item'
 import ShowLunch from '@/components/showlunch'
 import { getLunchMap, nbMap } from '../../utils/conf'
 
-const TIME = 8
+const TIME = 6
 
 export default {
   name: 'lunch',
+  porps: {
+    lunchType: String
+  },
   data () {
     return {
       selectedIndex: -1,
@@ -36,7 +44,13 @@ export default {
     }
   },
   created () {
-    this.lunchMap = getLunchMap()
+    const lunchType = this.$route.params.lunchType
+
+    if (!lunchType) {
+      this.$router.go(-1)
+    }
+
+    this.lunchMap = getLunchMap(lunchType)
     this.nbIndex = getRandom(1, nbMap.length)
   },
   computed: {
@@ -57,10 +71,14 @@ export default {
 
       this.timerA = setInterval(() => {
         let l = this.lunchMap.length
-        let randomNum = getRandom(1, l)
+        let randomNum = getRandom(0, l)
 
         if (randomNum === this.selectedIndex) {
-          randomNum = randomNum === l - 1 ? 0 : randomNum + 1
+          randomNum++
+        }
+
+        if (randomNum === l) {
+          randomNum = 0
         }
 
         this.selectedIndex = randomNum
@@ -89,6 +107,9 @@ export default {
 
         this.nbIndex = randomNum
       }, 2000)
+    },
+    goback () {
+      this.$router.go(-1)
     }
   },
   components: {
@@ -98,12 +119,12 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/sass" scoped>
+<style scoped>
 .lunch {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  padding: 30px 10px;
+  padding: 0px 10px 30px;
 }
 
 .lunch > span {
@@ -112,11 +133,17 @@ export default {
   justify-content: center;
   align-items: flex-start;
 }
-.run {
+.buttons {
   position: fixed;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
   bottom: 10px;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.buttons > span{
   height: 35px;
   line-height: 35px;
   padding: 3px 20px;

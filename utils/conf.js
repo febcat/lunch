@@ -1,6 +1,6 @@
 import { randomHexColor } from './tools'
 
-const LUNCH = [
+const BIG = [
   {
     text: '可乐炸鸡',
     shops: [
@@ -36,14 +36,6 @@ const LUNCH = [
     dislike: []
   },
   {
-    text: '水果捞',
-    shops: [
-      '切果NOW！'
-    ],
-    like: [],
-    dislike: []
-  },
-  {
     text: '脆皮鸡饭',
     shops: [],
     like: [],
@@ -51,7 +43,9 @@ const LUNCH = [
   },
   {
     text: '梅菜扣肉',
-    shops: []
+    shops: [
+      '知味小厨（饿了么）'
+    ]
   },
   {
     text: '嫩牛五方',
@@ -68,8 +62,110 @@ const LUNCH = [
     ],
     like: [],
     dislike: []
+  },
+  {
+    text: '水煮肉',
+    shops: [
+      '知味小厨（饿了么）'
+    ],
+    like: [],
+    dislike: []
+  },
+  {
+    text: '口水鸡',
+    shops: [
+      '太享元气饭'
+    ],
+    like: [
+      '各种鸡'
+    ],
+    dislike: []
+  }
+];
+
+const SMALL = [
+  {
+    text: '水果捞',
+    shops: [
+      '切果NOW！'
+    ],
+    like: [],
+    dislike: []
+  },
+  {
+    text: '甜点',
+    shops: [
+      '森点',
+      '7cake榴莲千层蛋糕'
+    ],
+    like: ['黑森林蛋糕（森点）', '巧克力泡芙（森点）'],
+    dislike: []
   }
 ]
+
+const DRINKS = [
+  {
+    text: '挑选新杯',
+    shops: [
+      '沪上阿姨'
+    ]
+  },
+  {
+    text: '芝士葡萄奶盖',
+    shops: [
+      '沪上阿姨'
+    ],
+    like: [
+      ''
+    ],
+    dislike: []
+  },
+  {
+    text: '芝士草莓奶盖',
+    shops: [
+      '沪上阿姨'
+    ],
+    like: [
+      '厚芋泥',
+      '小芋圆'
+    ],
+    dislike: []
+  },
+  {
+    text: '冰火两重天',
+    shops: [
+      '逅座十二茶'
+    ],
+    like: [
+      '黑糖珍珠',
+      '七彩芋圆'
+    ],
+    dislike: []
+  },
+  {
+    text: '霉春色染',
+    shops: [
+      '沪上阿姨'
+    ],
+    like: [
+      '厚芋泥',
+      '小芋圆'
+    ],
+    dislike: ['七彩芋圆']
+  },
+  {
+    text: '自力更生',
+    shops: [
+      '逅座十二茶'
+    ]
+  }
+]
+
+const lunchMap = {
+  big: BIG,
+  small: SMALL,
+  drinks: DRINKS
+}
 
 export const nbMap = [
   '温馨提示：特殊时期忌吃辛辣(⊙o⊙)哦',
@@ -79,8 +175,8 @@ export const nbMap = [
   '美丽即正义，"胖"即可爱，况且根本不胖哒( ఠൠఠ )ﾉ'
 ]
 
-export const getLunchMap = () => {
-  return LUNCH.map(item => {
+export const getLunchMap = type => {
+  return lunchMap[type].map(item => {
     item.color = randomHexColor();
     return item
   })
