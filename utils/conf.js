@@ -2,12 +2,21 @@ import { randomHexColor } from './tools'
 
 const BIG = [
   {
-    text: '可乐炸鸡',
+    text: '翅包饭',
     shops: [
       '偶霸韩味炸鸡(汉堡)'
     ],
     like: [
-      '翅包饭'
+      '翅包饭', '拉丝热狗棒', '炸鸡爱上年糕', '黄金舞蝶虾'
+    ],
+    dislike: []
+  },
+  {
+    text: '牛腩饭',
+    shops: [
+      '李喜枉牛腩饭'
+    ],
+    like: [
     ],
     dislike: []
   },
@@ -74,10 +83,20 @@ const BIG = [
   {
     text: '口水鸡',
     shops: [
-      '太享元气饭'
+      '太享元气饭',
+      '我家小厨'
     ],
     like: [
-      '各种鸡'
+      '锅包肉(我家小厨)'
+    ],
+    dislike: []
+  },
+  {
+    text: '酸菜鱼',
+    shops: [
+      '渔小美番茄与酸菜鱼'
+    ],
+    like: [
     ],
     dislike: []
   }
